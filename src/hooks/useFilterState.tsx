@@ -1,6 +1,6 @@
 // useFilterState.ts
 import { useState } from 'react';
-import { availableSizes, categories, priceRanges, products } from '@/constants/mockData';
+import { categories, priceRanges, products } from '@/constants/mockData';
 
 // Extract unique brands from products
 const extractBrands = () => {

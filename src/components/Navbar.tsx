@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Heart, Menu, X, ChevronDown } from 'lucide-react';
+import Link from 'next/link';
 
 const Navbar = ({
   mobileMenuOpen,
@@ -44,7 +45,9 @@ const Navbar = ({
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 font-bold text-xl text-black">
-            <a href="/" onClick={() => handleCategorySelect('All')}>TRENDWEAR</a>
+            <Link href="/" onClick={() => handleCategorySelect('All')}>
+              TRENDWEAR
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -62,27 +65,27 @@ const Navbar = ({
               {openDropdown === 'new' && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
                   <div className="py-2">
-                    <a
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('New & Featured', 'New Arrivals')}
                     >
                       New Arrivals
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('New & Featured', 'Trending Now')}
                     >
                       Trending Now
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('New & Featured', 'Bestsellers')}
                     >
                       Bestsellers
-                    </a>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -101,34 +104,34 @@ const Navbar = ({
               {openDropdown === 'women' && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
                   <div className="py-2">
-                    <a
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Women', 'All Women')}
                     >
                       All Women
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Women', 'Sneakers')}
                     >
                       Sneakers
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Women', 'Running')}
                     >
                       Running
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Women', 'Casual')}
                     >
                       Casual
-                    </a>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -147,34 +150,34 @@ const Navbar = ({
               {openDropdown === 'men' && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
                   <div className="py-2">
-                    <a
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Men', 'All Men')}
                     >
                       All Men
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Men', 'Sneakers')}
                     >
                       Sneakers
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Men', 'Running')}
                     >
                       Running
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Men', 'Casual')}
                     >
                       Casual
-                    </a>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -193,43 +196,42 @@ const Navbar = ({
               {openDropdown === 'kids' && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
                   <div className="py-2">
-                    <a
-                      href="#"
+                    <Link
+                      href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Kids', 'All Kids')}
                     >
                       All Kids
-                    </a>
-                    <a
-                      href="#"
+                    </Link>
+                    <Link
+                      href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Kids', 'Boys')}
                     >
                       Boys
-                    </a>
-                    <a
-                      href="#"
+                    </Link>
+                    <Link
+                      href="/product"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                       onClick={() => handleCategorySelect('Kids', 'Girls')}
                     >
                       Girls
-                    </a>
+                    </Link>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Limited Edition - direct link */}
-            <a
-              href="#"
+            <Link
+              href="/product"
               className="text-gray-800 hover:text-black transition-colors"
               onClick={(e) => {
-                e.preventDefault();
                 handleCategorySelect('Limited Edition');
               }}
             >
               Limited Edition
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Search and Wishlist */}

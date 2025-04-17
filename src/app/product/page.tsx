@@ -24,7 +24,7 @@ const ProductCatalog = () => {
     // Category state for navigation
     const [currentCategory, setCurrentCategory] = useState({
         main: 'All',
-        sub: null
+        sub: undefined
     });
 
     // Sidebar visibility state
@@ -32,8 +32,8 @@ const ProductCatalog = () => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
 
     // Product state
-    const [hoveredProduct, setHoveredProduct] = useState(null);
-    const [wishlist, setWishlist] = useState([]);
+    const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+    const [wishlist, setWishlist] = useState<number[]>([]);
 
     // Get filter state from custom hook
     const {
@@ -67,13 +67,13 @@ const ProductCatalog = () => {
         hookClearAllFilters();
         setCurrentCategory({
             main: 'All',
-            sub: null
+            sub: undefined
         });
     };
 
     // Toggle wishlist item
-    const toggleWishlist = (productId) => {
-        setWishlist(prev => {
+    const toggleWishlist = (productId: number) => {
+        setWishlist((prev: number[]) => {
             const index = prev.indexOf(productId);
             if (index > -1) {
                 return prev.filter(id => id !== productId);
@@ -117,13 +117,15 @@ const ProductCatalog = () => {
             // If a subcategory is selected
             if (currentCategory.sub && currentCategory.sub !== `All ${currentCategory.main}`) {
                 // For categories like "Running", "Casual", "Sneakers"
-                if (['Running', 'Casual', 'Sneakers'].includes(currentCategory.sub)) {
-                    tempFilters.categories = [currentCategory.sub.toLowerCase()];
+                const subCategory = currentCategory.sub ? (currentCategory.sub as string).toLowerCase() : undefined;
+                const validSubCategory = subCategory !== undefined ? subCategory : "";
+                if (['Running', 'Casual', 'Sneakers'].includes(validSubCategory)) {
+                    tempFilters.categories = [validSubCategory];
                 }
 
                 // For kids subcategories
-                if (['Boys', 'Girls'].includes(currentCategory.sub)) {
-                    tempFilters.genders = [currentCategory.sub.toLowerCase()];
+                if (['Boys', 'Girls'].includes(validSubCategory)) {
+                    tempFilters.genders = [validSubCategory];
                 }
 
                 // Handle special subcategories in New & Featured
@@ -206,7 +208,7 @@ const ProductCatalog = () => {
                 navVisible={navVisible}
                 wishlist={wishlist}
                 selectedFilters={selectedFilters}
-                handleSearchChange={(e) => handleFilterChange('search', e.target.value)}
+                handleSearchChange={(e: any) => handleFilterChange('search', e.target.value)}
                 setCurrentCategory={setCurrentCategory}
             />
 
@@ -215,7 +217,7 @@ const ProductCatalog = () => {
                 mobileMenuOpen={mobileMenuOpen}
                 setMobileMenuOpen={setMobileMenuOpen}
                 selectedFilters={selectedFilters}
-                handleSearchChange={(e) => handleFilterChange('search', e.target.value)}
+                handleSearchChange={(e: any) => handleFilterChange('search', e.target.value)}
                 setCurrentCategory={setCurrentCategory}
             />
 
@@ -306,8 +308,8 @@ const ProductCatalog = () => {
 };
 
 // Helper function to apply all filters
-function applyFilters(products, selectedFilters) {
-    return products.filter(product => {
+function applyFilters(products: any[], selectedFilters: any) {
+    return products.filter((product: any) => {
         // Category filter
         if (selectedFilters.categories.length > 0) {
             // Handle special categories
@@ -321,7 +323,7 @@ function applyFilters(products, selectedFilters) {
 
             // For regular categories like "running", "casual", etc.
             const regularCategories = selectedFilters.categories.filter(
-                cat => !['limited-edition', 'trending', 'new-arrivals', 'bestsellers'].includes(cat)
+                (cat: any) => !['limited-edition', 'trending', 'new-arrivals', 'bestsellers'].includes(cat)
             );
 
             if (regularCategories.length > 0 && !regularCategories.includes(product.category.toLowerCase())) {
@@ -346,13 +348,13 @@ function applyFilters(products, selectedFilters) {
 
         // Color filter
         if (selectedFilters.colors.length > 0 &&
-            !selectedFilters.colors.some(color => product?.colors?.includes(color))) {
+            !selectedFilters.colors.some((color: any) => product?.colors?.includes(color))) {
             return false;
         }
 
         // Price range filter
         if (selectedFilters.priceRanges.length > 0) {
-            const inPriceRange = selectedFilters.priceRanges.some(rangeId => {
+            const inPriceRange = selectedFilters.priceRanges.some((rangeId: any) => {
                 const range = priceRanges.find(r => r.id === rangeId);
                 return range && product.price >= range.min && product.price <= range.max;
             });
@@ -362,7 +364,7 @@ function applyFilters(products, selectedFilters) {
 
         // Size filter
         if (selectedFilters.sizes.length > 0 &&
-            !selectedFilters.sizes.some(size => product.sizes.includes(size))) {
+            !selectedFilters.sizes.some((size: any) => product.sizes.includes(size))) {
             return false;
         }
 
@@ -383,8 +385,8 @@ function applyFilters(products, selectedFilters) {
 }
 
 // Helper function to sort products
-function applySorting(products, sortOption) {
-    return [...products].sort((a, b) => {
+function applySorting(products: any[], sortOption: any) {
+    return [...products].sort((a: any, b: any) => {
         switch (sortOption) {
             case "price-low-high":
                 return a.price - b.price;

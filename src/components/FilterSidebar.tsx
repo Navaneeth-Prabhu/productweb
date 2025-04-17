@@ -118,7 +118,7 @@ const FilterSidebar = ({
                     {expandedFilters.category && (
                         <motion.div className="space-y-2">
                             {Object.entries(categories)
-                                .filter(([key, label]) =>
+                                .filter(([label]) =>
                                     label.toLowerCase().includes(filterSearch.category.toLowerCase())
                                 )
                                 .map(([key, label]) => (

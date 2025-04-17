@@ -1,9 +1,10 @@
 'use client'
 import React, { useState, useEffect, useRef, use } from 'react';
-import { Star, Heart, Minus, Plus, ShoppingBag } from 'lucide-react';
+import { Heart, Minus, Plus, ShoppingBag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import { products } from '@/constants/mockData'; // Ensure this import works correctly
 import Footer from '@/components/Footer';
+import Link from 'next/link';
 
 const ProductDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
     // Unwrap params using React.use() to avoid the warning
@@ -148,11 +149,11 @@ const ProductDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => 
             {/* Breadcrumb */}
             <div className="max-w-7xl mx-auto px-4 py-4 text-sm text-gray-500">
                 <div className="flex items-center">
-                    <a href="/" className="hover:underline">Home</a>
+                    <Link href="/" className="hover:underline">Home</Link>
                     <span className="mx-2">/</span>
-                    <a href="/collections" className="hover:underline">Collections</a>
+                    <Link href="/collections" className="hover:underline">Collections</Link>
                     <span className="mx-2">/</span>
-                    <a href={`/collections/${product.theme?.toLowerCase()}`} className="hover:underline">{product.theme}</a>
+                    <Link href={`/collections/${product.theme?.toLowerCase()}`} className="hover:underline">{product.theme}</Link>
                     <span className="mx-2">/</span>
                     <span className="text-gray-900">{product.name}</span>
                 </div>
@@ -255,7 +256,7 @@ const ProductDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => 
                             <div className="mb-6">
                                 <div className="flex justify-between items-center mb-2">
                                     <h3 className="text-sm font-medium text-gray-500">SIZE</h3>
-                                    <a href="#" className="text-sm text-gray-500 hover:underline">Size Guide</a>
+                                    <Link href="#" className="text-sm text-gray-500 hover:underline">Size Guide</Link>
                                 </div>
                                 <div className="grid grid-cols-5 gap-2">
                                     {product.sizes.map(size => (
@@ -369,12 +370,12 @@ const ProductDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => 
                             From t-shirts to accessories, show your love for your favorite characters with our
                             premium quality products.
                         </p>
-                        <a href={`/collections/${product.theme.toLowerCase()}`} className="inline-flex items-center font-medium hover:underline text-gray-800">
+                        <Link href={`/collections/${product.theme.toLowerCase()}`} className="inline-flex items-center font-medium hover:underline text-gray-800">
                             SHOP ALL {product.theme.toUpperCase()}
                             <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
-                        </a>
+                        </Link>
                     </div>
                     <div>
                         <img

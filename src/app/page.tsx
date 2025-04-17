@@ -31,28 +31,7 @@ const ShoeStore = () => {
   // Get filter state from custom hook
   const {
     selectedFilters,
-    expandedFilters,
-    expandedMoreFilters,
-    filterSearch,
-    sortOption,
-    setSelectedFilters,
-    setExpandedFilters,
-    setExpandedMoreFilters,
-    setFilterSearch,
-    setSortOption,
     handleFilterChange,
-    handleFilterSearchChange,
-    handleSortChange,
-    removeFilter,
-    clearAllFilters: hookClearAllFilters,
-    toggleFilterSection,
-    toggleMoreFilters,
-    getFilterNameById,
-    hasAppliedFilters,
-    totalAppliedFilters,
-    availableBrands,
-    availableColors,
-    availableGenders
   } = useFilterState();
   // Animation variants
   const fadeIn = {

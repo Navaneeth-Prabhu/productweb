@@ -2,7 +2,6 @@
 'use client'
 import React from 'react';
 import { X, Filter, ArrowUpDown } from 'lucide-react';
-import { useRouter } from 'next/router';
 interface SubHeaderProps {
     isHeaderSticky: boolean;
     hasAppliedFilters: boolean;
@@ -24,24 +23,29 @@ interface SubHeaderProps {
     setFilterSidebarOpen: (isOpen: boolean) => void;
     sortOption: string;
     handleSortChange: (option: string) => void;
+    currentCategory?: {
+        main: string;
+        sub?: string;
+    };
 }
 
 
-const SubHeader = ({
-    isHeaderSticky,
-    hasAppliedFilters,
-    totalAppliedFilters,
-    selectedFilters,
-    removeFilter,
-    clearAllFilters,
-    getFilterNameById,
-    sidebarVisible,
-    toggleSidebar,
-    setFilterSidebarOpen,
-    sortOption,
-    handleSortChange,
-    currentCategory // New prop for category display
-}) => {
+const SubHeader: React.FC<SubHeaderProps> = (props) => {
+    const {
+        isHeaderSticky,
+        hasAppliedFilters,
+        totalAppliedFilters,
+        selectedFilters,
+        removeFilter,
+        clearAllFilters,
+        getFilterNameById,
+        sidebarVisible,
+        toggleSidebar,
+        setFilterSidebarOpen,
+        sortOption,
+        handleSortChange,
+        currentCategory
+    } = props;
     // Generate the header title based on current category
     const getHeaderTitle = () => {
         if (!currentCategory) return 'Sneakers Collection (All)';
@@ -73,7 +77,7 @@ const SubHeader = ({
                         {hasAppliedFilters && (
                             <div className="hidden lg:flex flex-wrap gap-2 ml-4 items-center overflow-x-auto max-w-md">
                                 {Object.entries(selectedFilters).map(([filterType, values]) =>
-                                    filterType !== 'search' && values.length > 0 && values.map(value => (
+                                    filterType !== 'search' && (values as string[]).length > 0 && (values as string[]).map(value => (
                                         <span
                                             key={`${filterType}-${value}`}
                                             className="bg-gray-100 text-gray-800 text-sm font-medium px-3 py-1 rounded-full flex items-center whitespace-nowrap"
