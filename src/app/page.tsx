@@ -1,103 +1,230 @@
-import Image from "next/image";
+'use client'
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import Navbar from '@/components/Navbar';
+import useFilterState from '@/hooks/useFilterState';
+import { products } from '@/constants/mockData';
+import Footer from '@/components/Footer';
+import CommunitySection from '@/components/CommunitySection';
 
-export default function Home() {
+const ShoeStore = () => {
+  const [currentTab, setCurrentTab] = useState('men');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [navVisible, setNavVisible] = useState(true);
+  const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+
+  // Category state for navigation
+  const [currentCategory, setCurrentCategory] = useState({
+    main: 'All',
+    sub: null
+  });
+
+  // Sidebar visibility state
+  const [filterSidebarOpen, setFilterSidebarOpen] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+
+  // Product state
+  const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
+
+  // Get filter state from custom hook
+  const {
+    selectedFilters,
+    expandedFilters,
+    expandedMoreFilters,
+    filterSearch,
+    sortOption,
+    setSelectedFilters,
+    setExpandedFilters,
+    setExpandedMoreFilters,
+    setFilterSearch,
+    setSortOption,
+    handleFilterChange,
+    handleFilterSearchChange,
+    handleSortChange,
+    removeFilter,
+    clearAllFilters: hookClearAllFilters,
+    toggleFilterSection,
+    toggleMoreFilters,
+    getFilterNameById,
+    hasAppliedFilters,
+    totalAppliedFilters,
+    availableBrands,
+    availableColors,
+    availableGenders
+  } = useFilterState();
+  // Animation variants
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="font-sans bg-white">
+      {/* Header/Navigation */}
+      <Navbar
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+        navVisible={navVisible}
+        wishlist={wishlist}
+        selectedFilters={selectedFilters}
+        handleSearchChange={(e) => handleFilterChange('search', e.target.value)}
+        setCurrentCategory={setCurrentCategory}
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+      {/* Hero Section */}
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+        className="px-4 py-8 container mx-auto"
+      >
+        <h1 className="text-4xl md:text-5xl font-bold leading-tight text-black">SHOES TREASURES<br />AWAIT YOU</h1>
+        <div className="mt-4 relative">
+          {/* <div className="bg-black inline-block px-4 py-2 text-white text-xs">TRENDING</div> */}
+          <div className="flex flex-wrap text-xs mt-4 space-x-6">
+            <div className="uppercase font-bold text-gray-400">New Balance <span className="font-normal text-gray-800"> 90/60</span></div>
+            <div className="uppercase text-gray-800">Nike <span className="font-normal">Dunk Retro</span></div>
+            <div className="uppercase text-gray-800">New <span className="font-normal">(Just Added)</span></div>
+          </div>
+
+          <div className="mt-4 relative">
+            <a href={`/product`}>
+              <motion.img
+                // whileHover={{ scale: 1.02 }}
+                // transition={{ duration: 0.3 }}
+                src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/fd0cf745-cdc8-4641-a672-ae860165f3e3/JORDAN+LUKA+3+PF.png"
+                alt="Featured New Balance shoe"
+                className="w-full max-h-250 object-cover bg-gray-100"
+              />
+              <div className="mt-2 flex justify-between items-center">
+
+                <div className="flex items-center">
+                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* New Arrivals Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={staggerContainer}
+        className="px-4 py-8 bg-white container mx-auto"
+      >
+        <h2 className="text-3xl font-bold mb-6 text-black">NEW ARRIVALS</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            {
+              name: "Nike Alphafly 3",
+              type: "Men's Basketball Shoes",
+              price: "$130.00",
+              image: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/eb6cdeee-ef8c-4a7e-bd77-5dbc5843f6d4/ZOOMX+VAPORFLY+NEXT%25+3+FK+EK.png"
+            },
+            {
+              name: "Nike Pegasus Trail 5 GORE-TEX",
+              type: "Running Shoes",
+              price: "$150.00",
+              image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/312aa70c-dea2-49ac-883b-9feceb0d1d71/NIKE+PEGASUS+TRAIL+5+GTX.png"
+            },
+            {
+              name: "Nike Pegasus 41",
+              type: "Sneakers Shoes",
+              price: "$100.00",
+              image: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/2caa25d0-7846-4b6e-8309-9c887213e94b/AIR+ZOOM+PEGASUS+41.png"
+            }
+          ].map((shoe, index) => (
+            <motion.div
+              key={index}
+              variants={fadeIn}
+              whileHover={{ y: -5 }}
+              className="bg-gray-50"
+            >
+              <a href={`/product`}>
+                <img src={shoe.image} alt={shoe.name} className="w-full h-120  object-cover" />
+                <div className="p-3">
+                  <h2 className="text-lg font-bold uppercase text-black">{shoe.name}</h2>
+                </div>
+              </a>
+
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+
+      {/* Special Edition */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        className="px-4 py-8 bg-white container mx-auto"
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl font-bold text-black">SPECIAL EDITION</h2>
+          <a href='/product'>
+          <div className="border border-black text-black text-xs px-4 py-2 uppercase">View More</div>
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            {
+              name: "Nike Vaporfly 4",
+              type: "Men's Basketball Shoes",
+              image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/9b390895-8786-4437-99bf-af03be5c20a0/ZOOMX+VAPORFLY+NEXT%25+4.png"
+            },
+            {
+              name: "Converse x Transformers Chuck Taylor",
+              type: "Running Shoes",
+              image: "https://www.converse.in/media/catalog/product/a/1/a11659c_a_107x1.jpg?optimize=medium&bg-color=255%2C255%2C255&fit=cover&height=900&width=900&auto=webp&format=pjpg"
+            },
+            {
+              name: "All Star BB Shift CX Trick Or Treat",
+              type: "Sneakers Shoes",
+              image: "https://www.converse.in/media/catalog/product/a/0/a09255c_a_107x1_white_1.jpg?optimize=medium&bg-color=255%2C255%2C255&fit=cover&height=900&width=900&auto=webp&format=pjpg"
+            }
+          ].map((shoe, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ y: -5 }}
+              className="bg-gray-50"
+            >
+              <a href={`/product`}>
+                <img src={shoe.image} alt={shoe.name} className="w-full h-150 object-cover" />
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+      <CommunitySection />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
-}
+};
+
+export default ShoeStore;
