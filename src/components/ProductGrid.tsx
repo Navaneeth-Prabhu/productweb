@@ -1,8 +1,8 @@
 // ProductGrid.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Product } from '@/types';
 import ProductCard from './ProductCard';
+import { Product } from '@/constants/mockData';
 
 interface ProductGridProps {
     sidebarVisible: boolean;

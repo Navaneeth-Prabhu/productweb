@@ -3,39 +3,48 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, ChevronDown, ChevronRight } from 'lucide-react';
 
+type Category = {
+    main: string;
+    sub?: string | null;
+};
+
+type MobileMenuProps = {
+    mobileMenuOpen: boolean;
+    setMobileMenuOpen: (open: boolean) => void;
+    selectedFilters: {
+        search: string;
+        [key: string]: string | string[];
+    };
+    handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setCurrentCategory: (category: Category) => void;
+};
+
 const MobileMenu = ({
     mobileMenuOpen,
     setMobileMenuOpen,
     selectedFilters,
     handleSearchChange,
-    setCurrentCategory // New prop to handle category changes
-}) => {
-    // State to track expanded mobile menu sections
-    const [expandedSections, setExpandedSections] = useState({
+    setCurrentCategory
+}: MobileMenuProps) => {
+    const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
         new: false,
         women: false,
         men: false,
         kids: false
     });
 
-    // Toggle expanded section
-    const toggleSection = (section) => {
-        setExpandedSections({
-            ...expandedSections,
-            [section]: !expandedSections[section]
-        });
+    const toggleSection = (section: string) => {
+        setExpandedSections((prev) => ({
+            ...prev,
+            [section]: !prev[section]
+        }));
     };
 
-    // Handle category selection
-    const handleCategorySelect = (category, subCategory = null) => {
-        setCurrentCategory({
-            main: category,
-            sub: subCategory
-        });
-        setMobileMenuOpen(false); // Close mobile menu after selection
+    const handleCategorySelect = (category: string, subCategory: string | null = null) => {
+        setCurrentCategory({ main: category, sub: subCategory });
+        setMobileMenuOpen(false);
     };
 
-    // Animation variants
     const menuVariants = {
         closed: { opacity: 0, x: "100%" },
         open: { opacity: 1, x: 0 }

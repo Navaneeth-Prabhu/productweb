@@ -3,16 +3,12 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import useFilterState from '@/hooks/useFilterState';
-import { products } from '@/constants/mockData';
 import Footer from '@/components/Footer';
 import CommunitySection from '@/components/CommunitySection';
 
 const ShoeStore = () => {
-  const [currentTab, setCurrentTab] = useState('men');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [navVisible, setNavVisible] = useState(true);
-  const [isHeaderSticky, setIsHeaderSticky] = useState(false);
 
   // Category state for navigation
   const [currentCategory, setCurrentCategory] = useState({
@@ -20,12 +16,6 @@ const ShoeStore = () => {
     sub: null
   });
 
-  // Sidebar visibility state
-  const [filterSidebarOpen, setFilterSidebarOpen] = useState(false);
-  const [sidebarVisible, setSidebarVisible] = useState(true);
-
-  // Product state
-  const [hoveredProduct, setHoveredProduct] = useState(null);
   const [wishlist, setWishlist] = useState([]);
 
   // Get filter state from custom hook
@@ -62,7 +52,7 @@ const ShoeStore = () => {
         navVisible={navVisible}
         wishlist={wishlist}
         selectedFilters={selectedFilters}
-        handleSearchChange={(e) => handleFilterChange('search', e.target.value)}
+        handleSearchChange={(e:any) => handleFilterChange('search', e.target.value)}
         setCurrentCategory={setCurrentCategory}
       />
 

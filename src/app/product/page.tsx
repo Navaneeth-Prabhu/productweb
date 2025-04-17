@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { products, priceRanges } from '@/constants/mockData';
 import Footer from '@/components/Footer';
-import NewsSection from '@/components/NewsSection';
-import HeroBanner from '@/components/HeroBanner';
 import Navbar from '@/components/Navbar';
 import MobileMenu from '@/components/MobileMenu';
 import SubHeader from '@/components/SubHeader';
@@ -14,6 +12,11 @@ import MobileFilterSidebar from '@/components/MobileFilterSidebar';
 import Breadcrumb from '@/components/Breadcrumb';
 import useFilterState from '@/hooks/useFilterState';
 
+export type Category = {
+    main: string;
+    sub?: string | null;
+};
+
 const ProductCatalog = () => {
     // Navigation state
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -22,10 +25,8 @@ const ProductCatalog = () => {
     const [isHeaderSticky, setIsHeaderSticky] = useState(false);
 
     // Category state for navigation
-    const [currentCategory, setCurrentCategory] = useState({
-        main: 'All',
-        sub: undefined
-    });
+    const [currentCategory, setCurrentCategory] = useState<Category>({ main: 'All', sub: undefined });
+
 
     // Sidebar visibility state
     const [filterSidebarOpen, setFilterSidebarOpen] = useState(false);
@@ -43,10 +44,7 @@ const ProductCatalog = () => {
         filterSearch,
         sortOption,
         setSelectedFilters,
-        setExpandedFilters,
-        setExpandedMoreFilters,
-        setFilterSearch,
-        setSortOption,
+
         handleFilterChange,
         handleFilterSearchChange,
         handleSortChange,

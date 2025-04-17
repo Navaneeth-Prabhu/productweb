@@ -25,7 +25,7 @@ interface SubHeaderProps {
     handleSortChange: (option: string) => void;
     currentCategory?: {
         main: string;
-        sub?: string;
+        sub?: string | null;
     };
 }
 

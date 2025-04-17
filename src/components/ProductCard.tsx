@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
-import { Product } from '@/types'; // Import Product type
+import { Product } from '@/constants/mockData';
 
 interface ProductCardProps {
   product: Product;

@@ -14,7 +14,7 @@ const ProductDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => 
     const product = products.find(p => p.id === productId) || products[0];
 
     const [selectedSize, setSelectedSize] = useState("M");
-    const [selectedColor, setSelectedColor] = useState(product.colors[0] || "blue");
+    const [selectedColor, setSelectedColor] = useState(() => product?.colors?.[0] || "blue");
     const [quantity, setQuantity] = useState(1);
     const [zoomImage, setZoomImage] = useState<string | null>(null);
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
@@ -138,6 +138,7 @@ const ProductDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => 
         <div className="min-h-screen bg-white">
             {/* Navigation Bar */}
             <Navbar
+                setCurrentCategory={() => { }}
                 mobileMenuOpen={false}
                 setMobileMenuOpen={() => { }}
                 navVisible={true}

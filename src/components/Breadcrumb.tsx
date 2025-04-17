@@ -3,7 +3,7 @@ import React from 'react';
 interface BreadcrumbProps {
     currentCategory: {
         main: string;
-        sub?: string;
+        sub?: string | null;
     };
 }
 

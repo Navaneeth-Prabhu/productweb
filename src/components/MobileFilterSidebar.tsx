@@ -94,7 +94,10 @@ const MobileFilterSidebar = ({
             {hasAppliedFilters && (
                 <div className="flex flex-wrap gap-2 mb-4">
                     {Object.entries(selectedFilters).map(([filterType, values]) =>
-                        filterType !== 'search' && values.length > 0 && values.map(value => (
+                        filterType !== 'search' &&
+                        Array.isArray(values) &&
+                        values.length > 0 &&
+                        values.map(value => (
                             <span
                                 key={`${filterType}-${value}`}
                                 className="bg-gray-100 text-sm font-medium px-3 py-1 rounded-full flex items-center"
@@ -109,6 +112,7 @@ const MobileFilterSidebar = ({
                             </span>
                         ))
                     )}
+
                 </div>
             )}
 
